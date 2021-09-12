@@ -1,0 +1,35 @@
+.hidden {
+  visibility: none;
+}
+
+.show {
+  display: block;
+}
+
+#popUp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* background-color: rgba(0, 0, 0, 0.9); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} /* <-- end */
+
+#studentInfo {
+  background-color: lightgreen;
+  padding: 3rem;
+}
+
+.closebutton {
+  background-color: #981c1c; /*placeholder*/
+  border: 0;
+  position: absolute;
+  border-radius: 50%;
+  right: 0.3em;
+  top: 0.3em;
+  width: 4em;
+  height: 4em;
+}

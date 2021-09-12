@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Hacked Hogwarts List</title>
+</head>
+<body>
+
+  
+<h1>The Class of 1991</h1>
+<h2>Hogwarts School of Witchcraft and Wizardry</h2>
+
+
+
+<section class="filterHouse">
+    <button class="filter" data-action="filter" data-filter="all">
+      All
+    </button>
+    <button class="filter" data-action="filter" data-filter="gryffindor">
+        Gryffindor
+      </button>
+      <button class="filter" data-action="filter" data-filter="hufflepuff">
+        Hufflepuff
+      </button>
+      <button class="filter" data-action="filter" data-filter="ravenclaw">
+        Ravenclaw
+      </button>
+    <button class="filter" data-action="filter" data-filter="slytherin">
+      Slytherin
+    </button>
+    <button class="btn" data-action="filter" data-filter="expelled">
+      Expelled
+    </button>
+  </section>
+
+  <table id="list">
+    <thead>
+        <tr>
+            <th>FirstName</th>
+            <th>MiddleName</th>
+            <th>LastName</th>
+            <th>House</th>
+            <!-- <th>NickName</th> -->
+
+            <!-- <th>Image</th> -->
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+  <template id="studentList">
+    <tr id="allStudentsInfo">
+      <td class="student_info popUp" data-field="firstName">FIRST NAME</td>
+      <td class="student_info popUp" data-field="middleName">MIDDLE NAME</td>
+      <td class="student_info popUp" data-field="lastName">LASTNAME</td>
+      <td class="student_info popUp" data-field="house">HOUSE</td>
+      <td class="student_info popUp" data-field="prefect">NOT</td>
+      <td class="student_info popUp" data-field="squad">NOT</td>
+      <td class="student_info popUp" data-field="expel">NOT</td>
+    </tr>
+  </template>
+
+
+  <div id="popUp" class="hidden" >
+    <div id="studentInfo" >
+      <p class="full_name">Harry James Potter</p>
+      <p class="nick_name">N/A</p>
+      <p class="house">Gryffindor</p>
+      <p class="gender">Male</p>
+      <p class="blood_type">Half-blood</p>
+      <p class="prefect" data-field="single_prefect">No</p>
+      <p class="squad" data-field="single_squad">No</p>
+      <p class="expel_status"></p>
+      <p></p>
+
+    </div>
+    <button class="closeButton" id="close">X</button>
+
+  </div>
+
+</div>
+
+
+</section>
+</body>
+<script src="script.js"></script>
+</html>
