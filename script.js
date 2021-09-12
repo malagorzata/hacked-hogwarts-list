@@ -144,10 +144,10 @@ function selectFilter(event) {
 function filterList(filterBy) {
 let filteredList = studentList;
 if (filterBy === "gryffindor") {
-    // create a filterede list of only Gryffindor
+    // create a filtered list of only Gryffindor
     filteredList = studentList.filter(filterGryffindor);
   } else if (filterBy === "slytherin") {
-    // create a filterede list of only Slytherin
+    // create a filtered list of only Slytherin
     filteredList = studentList.filter(filterSlytherin);
   } else if (filterBy === "hufflepuff") {
     // create a filtered list of only Hyfflepuff
