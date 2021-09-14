@@ -1,3 +1,57 @@
+@import url("http://fonts.cdnfonts.com/css/harry-potter");
+
+:root {
+  --background-color: #52245f;
+  --border-color: #e0be3f;
+  --main-background: #f9f7f5;
+  --text-color: #2f2b5f;
+
+  --display-font: "Harry Potter", sans-serif;
+}
+body {
+  background-color: var(--background-color);
+}
+
+main {
+  margin: 1rem;
+  background-color: var(--main-background);
+  border: 5px solid;
+  border-radius: 30px;
+  border-color: var(--border-color);
+  padding: 2rem;
+}
+h1,
+h2 {
+  color: var(--border-color);
+  text-align: center;
+}
+
+h1 {
+  font-family: var(--display-font);
+  font-size: 3rem;
+}
+
+/* TABLE ITEMS */
+
+#list th,
+#list td {
+  padding: 0 1.5rem;
+}
+
+#allStudentsInfo {
+  background-color: #eadcb5;
+}
+
+#list tbody tr:nth-child(2n + 1) td {
+  background-color: #dbc693;
+}
+/* table {
+  border-collapse: collapse;
+} */
+
+.sutdent_info {
+  margin: 0;
+}
 .hidden {
   visibility: hidden;
 }
