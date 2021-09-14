@@ -28,6 +28,9 @@ function registerButtons() {
     document.querySelectorAll("[data-action='filter']")
     .forEach(button => button.addEventListener("click", selectFilter));
 
+    document.querySelectorAll("[data-action='sort']")
+    .forEach(button => button.addEventListener("click", selectSort));
+
 }
 
 function start() {
@@ -200,6 +203,54 @@ function filterGryffindor(student) {
 
       
 }
+
+function selectSort(event) {
+const sortBy = event.target.dataset.sort;
+console.log(`user selected ${sortBy}`);
+
+ sortList(sortBy);
+  }
+
+
+function sortList(sortBy) {
+  const list = studentList;
+
+  if (sortBy === "firstName") {
+    let sortedList = list.sort(sortByName);
+  } else if (sortBy === "middleName") {
+    let sortedList = list.sort(sortByMiddleName);
+  } else if (sortBy === "lastName") {
+    let sortedList = list.sort(sortByLastName);
+  }
+
+  displayList(list);
+}
+
+function sortByName(A, B) {
+  if (A.firstName < B.firstName) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortByMiddleName(A, B) {
+  if (A.middleName < B.middleName) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortByLastName(A, B) {
+  if (A.lastName < B.lastName) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+
 function displayList(studentList) {
     document.querySelector("#list tbody").innerHTML = "";
   studentList.forEach(displayStudent);
