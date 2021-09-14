@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", start);
 
 const studentList = [];
 const Student = {
+    imageUrl: "",
     firstName: "",
     lastName: "",
     middleName: "",
     // nickName: "",
-    // image: "",
     house: "",
 
 }
@@ -21,7 +21,7 @@ let middleName;
 let lastName;
 // let nickname;
 let house;
-// let image;
+let imageUrl;
 
 
 function registerButtons() {
@@ -58,6 +58,8 @@ function prepareObjects(jsonData) {
               student.house = elm.house;
               student.house = student.house.trim();
               student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
+              student.imageUrl = getImageUrl(student.lastName, student.firstName);
+
               studentList.push(student);
             });
     
@@ -112,6 +114,27 @@ return firstName;
  
   }
 
+  function getImageUrl(lastname, firstname) {
+    // lastname_firstletteroffirstname.png
+  
+    if (lastname !== undefined) {
+      const smallLastName = lastname.toLowerCase();
+      const smallFirstName = firstname.toLowerCase();
+      const firstLetterOfFirstName = firstname.slice(0, 1).toLowerCase();
+      if (lastname == "Patil") {
+        const imageSrc = `${smallLastName}_${smallFirstName}.png`;
+        return imageSrc;
+      } else if (lastname.includes("-") == true) {
+        const partOfLastNameAfterHyphen = lastname.slice(lastname.indexOf("-") + 1);
+        const imageSrc = `${partOfLastNameAfterHyphen}_${firstLetterOfFirstName}.png`;
+        return imageSrc;
+      } else {
+        const imageSrc = `${smallLastName}_${firstLetterOfFirstName}.png`;
+        return imageSrc;
+      }
+    }
+  }
+  
 function displayList() {
     document.querySelector("#list tbody").innerHTML = "";
     studentList.forEach(displayStudent);
@@ -120,19 +143,18 @@ function displayList() {
 
 }
 
-function displayStudent(student) {
-    const clone = document.querySelector("template#studentList").content.cloneNode(true);
+// function displayStudent(student) {
+//     const clone = document.querySelector("template#studentList").content.cloneNode(true);
 
-    clone.querySelector("[data-field=firstName]").textContent = student.firstName;
-    clone.querySelector("[data-field=middleName]").textContent = student.middleName;
-    clone.querySelector("[data-field=lastName]").textContent = student.lastName;
-    // clone.querySelector("[data-field=nickName]").textContent = student.nickName;
-    clone.querySelector("[data-field=house]").textContent = student.house;
+//     clone.querySelector("[data-field=firstName]").textContent = student.firstName;
+//     clone.querySelector("[data-field=middleName]").textContent = student.middleName;
+//     clone.querySelector("[data-field=lastName]").textContent = student.lastName;
+//     // clone.querySelector("[data-field=nickName]").textContent = student.nickName;
+//     clone.querySelector("[data-field=house]").textContent = student.house;
+//     document.querySelector("#list").appendChild( clone );
 
-    document.querySelector("#list").appendChild( clone );
-
-    // console.log("displayStudent");
-}
+//     // console.log("displayStudent");
+// }
 
 
 function selectFilter(event) {
@@ -189,6 +211,9 @@ function displayList(studentList) {
 function displayStudent(student) {
     const clone = document.querySelector("template#studentList").content.cloneNode(true);
 
+    clone.querySelector(
+        "[data-field=image] img"
+      ).src = `images/${student.imageUrl}`;
     clone.querySelector("[data-field=firstName]").textContent = student.firstName;
     clone.querySelector("[data-field=middleName]").textContent = student.middleName;
     clone.querySelector("[data-field=lastName]").textContent = student.lastName;
@@ -207,13 +232,14 @@ function displayStudent(student) {
 
 
 function showDetails(student) {
-   
-
     popWindow.style.display = "";
     popWindow.classList.remove("hidden");
+
     popWindow.querySelector(
       ".full_name"
     ).textContent = ` ${student.firstName} ${student.middleName} ${student.lastName}`;
+    popWindow.querySelector(".student_image").src = `images/${student.imageUrl}`;
+
 }
 
 

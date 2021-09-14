@@ -39,13 +39,12 @@
   <table id="list">
     <thead>
         <tr>
+          <th>Image</th>
             <th>FirstName</th>
             <th>MiddleName</th>
             <th>LastName</th>
             <th>House</th>
             <!-- <th>NickName</th> -->
-
-            <!-- <th>Image</th> -->
         </tr>
     </thead>
     <tbody>
@@ -55,19 +54,26 @@
 
   <template id="studentList">
     <tr id="allStudentsInfo">
+      <td class="student_profile_image" data-field="image">
+        <img src="" alt="" />
+      </td>
       <td class="student_info popUp" data-field="firstName">FIRST NAME</td>
       <td class="student_info popUp" data-field="middleName">MIDDLE NAME</td>
       <td class="student_info popUp" data-field="lastName">LASTNAME</td>
       <td class="student_info popUp" data-field="house">HOUSE</td>
-      <td class="student_info popUp" data-field="prefect">NOT</td>
-      <td class="student_info popUp" data-field="squad">NOT</td>
-      <td class="student_info popUp" data-field="expel">NOT</td>
+      <td class="student_info popUp" data-field="prefect">Prefect</td>
+      <td class="student_info popUp" data-field="squad">Squad</td>
+      <td class="student_info popUp" data-field="expel">Student status</td>
+
     </tr>
   </template>
 
 
   <div id="popUp" class="hidden" >
     <div id="studentInfo" >
+      <div>
+        <img src="" alt="" class="student_image" />
+      </div>
       <p class="full_name">Harry James Potter</p>
       <p class="nick_name">N/A</p>
       <p class="house">Gryffindor</p>
