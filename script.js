@@ -10,8 +10,13 @@ const Student = {
     middleName: "",
     // nickName: "",
     house: "",
+    bloodstatus: "",
+    prefect: false,
+    squad: false,
+    expel: false,
 
 }
+
 let popWindow = document.querySelector("#popUp");
 let closeWindow = document.querySelector("#close");
 
@@ -270,6 +275,19 @@ function displayStudent(student) {
     clone.querySelector("[data-field=lastName]").textContent = student.lastName;
     // clone.querySelector("[data-field=nickName]").textContent = student.nickName;
     clone.querySelector("[data-field=house]").textContent = student.house;
+
+if(student.prefect === true) {
+    clone.querySelector("[data-field=prefect]").textContent = "⭐"
+
+} else {
+  clone.querySelector("[data-field=prefect]").textContent = "☆";
+
+}
+
+clone.querySelector("[data-field=prefect]").addEventListener("click", clickStar);
+
+    clone.querySelector("[data-field=house]").textContent = student.house;
+
     clone
     .querySelector(".popUp")
     .addEventListener("click", () => showDetails(student));  
