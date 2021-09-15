@@ -1,5 +1,11 @@
 "use strict";
 
+// need to add Build List - finish watching filtering & sorting
+// finish prefect
+// blood status
+
+
+
 document.addEventListener("DOMContentLoaded", start);
 
 const studentList = [];
@@ -16,6 +22,15 @@ const Student = {
     expel: false,
 
 }
+
+
+const settings = {
+  filter: "all",
+  sortBy: "name",
+  sortDir: "asc",
+
+}
+
 
 let popWindow = document.querySelector("#popUp");
 let closeWindow = document.querySelector("#close");
@@ -167,27 +182,33 @@ function displayList() {
 
 function selectFilter(event) {
     const filter = event.target.dataset.filter;
-    filterList(filter);
-    }
+    setFilter(filter)    }
   
 
-function filterList(filterBy) {
-let filteredList = studentList;
-if (filterBy === "gryffindor") {
+ function setFilter(filter) {
+   settings.filterBy = filter;
+      buildList();
+
+    }
+
+
+function filterList(filteredList) {
+// let filteredList = studentList;
+if (settings.filterBy === "gryffindor") {
     // create a filtered list of only Gryffindor
     filteredList = studentList.filter(filterGryffindor);
-  } else if (filterBy === "slytherin") {
+  } else if (settings.filterBy === "slytherin") {
     // create a filtered list of only Slytherin
     filteredList = studentList.filter(filterSlytherin);
-  } else if (filterBy === "hufflepuff") {
+  } else if (settings.filterBy === "hufflepuff") {
     // create a filtered list of only Hyfflepuff
     filteredList = studentList.filter(filterHufflepuff);
-  } else if (filterBy === "ravenclaw") {
+  } else if (settings.filterBy === "ravenclaw") {
     filteredList = studentList.filter(filterRavenclaw);}
 //   } else if (settings.filterBy === "resposibilities") {
 //     filteredList = studentList.filter(filterResponsibilities);
 //   }
-displayList(filteredList) 
+return filteredList; 
  }
 
 function filterGryffindor(student) {
@@ -211,50 +232,90 @@ function filterGryffindor(student) {
 
 function selectSort(event) {
 const sortBy = event.target.dataset.sort;
+const sortDir = event.target.dataset.sortDirection;
+
+if (sortDir === "asc") {
+  event.target.dataset.sortDirection = "desc"; 
+} else {
+  event.target.dataset.sortDirection = "asc"; 
+
+}
 console.log(`user selected ${sortBy}`);
 
- sortList(sortBy);
-  }
-
-
-function sortList(sortBy) {
-  const list = studentList;
-
-  if (sortBy === "firstName") {
-    let sortedList = list.sort(sortByName);
-  } else if (sortBy === "middleName") {
-    let sortedList = list.sort(sortByMiddleName);
-  } else if (sortBy === "lastName") {
-    let sortedList = list.sort(sortByLastName);
-  }
-
-  displayList(list);
+setSort(sortBy, sortDir);
+  
 }
 
-function sortByName(A, B) {
-  if (A.firstName < B.firstName) {
-    return -1;
+
+function setSort(sortBy, sortDir) {
+  settings.sortBy = sortBy;
+  settings.sortDir = sortDir;
+  buildList();
+
+
+}
+
+function sortList(sortedList) {
+  let direction = 1;
+
+  if(settings.sortDir === "desc") {
+    direction = -1;
   } else {
-    return 1;
+    direction = 1;
   }
+
+  sortedList = sortedList.sort(sortByProperty);
+
+
+  // if (sortBy === "firstName") {
+  //   let sortedList = list.sort(sortByName);
+  // } else if (sortBy === "middleName") {
+  //   let sortedList = list.sort(sortByMiddleName);
+  // } else if (sortBy === "lastName") {
+  //   let sortedList = list.sort(sortByLastName);
+  // }
+
+  function sortByProperty(A, B) {
+    if (A[settings.sortBy] < B[settings.sortBy]) {
+      return -1 * direction;
+    } else {
+      return 1 * direction;
+    }
+  }
+
+  return sortedList;
 }
 
-function sortByMiddleName(A, B) {
-  if (A.middleName < B.middleName) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
+// function sortByName(A, B) {
+//   if (A.firstName < B.firstName) {
+//     return -1;
+//   } else {
+//     return 1;
+//   }
+// }
 
-function sortByLastName(A, B) {
-  if (A.lastName < B.lastName) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
+// function sortByMiddleName(A, B) {
+//   if (A.middleName < B.middleName) {
+//     return -1;
+//   } else {
+//     return 1;
+//   }
+// }
 
+// function sortByLastName(A, B) {
+//   if (A.lastName < B.lastName) {
+//     return -1;
+//   } else {
+//     return 1;
+//   }
+// }
+
+function buildList() {
+  const currentList = filterList(studentList);
+  const sortedList = sortList(currentList);
+  displayList(sortedList);
+
+}
 
 function displayList(studentList) {
     document.querySelector("#list tbody").innerHTML = "";
@@ -284,7 +345,7 @@ if(student.prefect === true) {
 
 }
 
-clone.querySelector("[data-field=prefect]").addEventListener("click", clickStar);
+// clone.querySelector("[data-field=prefect]").addEventListener("click", clickStar);
 
     clone.querySelector("[data-field=house]").textContent = student.house;
 
