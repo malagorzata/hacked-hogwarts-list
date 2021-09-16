@@ -233,6 +233,13 @@ function filterGryffindor(student) {
 function selectSort(event) {
 const sortBy = event.target.dataset.sort;
 const sortDir = event.target.dataset.sortDirection;
+oldElement.classList.remove("sortby");
+
+
+const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
+
+event.target.classList.add("sortby")
+
 
 if (sortDir === "asc") {
   event.target.dataset.sortDirection = "desc"; 

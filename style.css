@@ -87,3 +87,17 @@ h1 {
   width: 4em;
   height: 4em;
 }
+
+/* Sorting */
+
+#sorting th.sortby {
+  text-decoration: underline;
+}
+
+#sorting th.sortby[data-sort-direction="asc"]::after {
+  content: " ↓ ";
+}
+
+#sorting th.sortby[data-sort-direction="desc"]::after {
+  content: "↓";
+}
