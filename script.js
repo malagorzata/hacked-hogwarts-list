@@ -86,8 +86,8 @@ function prepareObjects(jsonData) {
               studentList.push(student);
             });
     
-
-            displayList(studentList);
+buildList();
+            // displayList(studentList);
 }
 
 
