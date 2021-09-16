@@ -233,12 +233,10 @@ function filterGryffindor(student) {
 function selectSort(event) {
 const sortBy = event.target.dataset.sort;
 const sortDir = event.target.dataset.sortDirection;
-oldElement.classList.remove("sortby");
 
-
-const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
-
-event.target.classList.add("sortby")
+// const oldElement = document.querySelector(`[data-sort="${settings.sortBy}"]`);
+// oldElement.classList.remove("sortby");
+// event.target.classList.add("sortby");
 
 
 if (sortDir === "asc") {
@@ -352,16 +350,25 @@ if(student.prefect === true) {
 
 }
 
-// clone.querySelector("[data-field=prefect]").addEventListener("click", clickStar);
+clone.querySelector("[data-field=prefect]").addEventListener("click", clickStar);
 
-    clone.querySelector("[data-field=house]").textContent = student.house;
+function clickStar() {
+  console.log("clicking");
+  if (student.prefect === true) {
+    student.prefect = false;
+  } else {
+    student.prefect = true;
+  }
+  buildList();
+}
 
     clone
     .querySelector(".popUp")
     .addEventListener("click", () => showDetails(student));  
 
-    document.querySelector("#list tbody").appendChild(clone);
     closeWindow.addEventListener("click", () => (popWindow.style.display = "none"));
+    document.querySelector("#list tbody").appendChild(clone);
+
 
 
 }
