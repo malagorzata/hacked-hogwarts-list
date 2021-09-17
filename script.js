@@ -357,6 +357,7 @@ function clickStar() {
   if (student.prefect === true) {
     student.prefect = false;
   } else {
+    tryToMakePrefect(student);
     student.prefect = true;
   }
   buildList();
@@ -373,6 +374,48 @@ function clickStar() {
 
 }
     
+
+function tryToMakePrefect(selectedStudent) {
+
+  const prefects = studentList.filter(student => student.prefect)
+  const prefects = allPrefects.filter(
+    (prefect) => prefect.house === selectedStudent.house
+  );
+
+  const other = prefects
+    .filter(
+      (prefects) =>
+        prefects.house === selectedStudent.house &&
+        prefects.gender === selectedStudent.gender
+    )
+    .shift();
+
+ // if there is another of the same type, house && gender
+ if (other !== undefined) {
+  console.log("there can only be one prefect of each type");
+  removeOther(other);
+} else {
+  appointPrefect(selectedStudent);
+}
+
+function removeOther(other) {
+  removePrefect(other)
+  appointPrefect(selectedStudent)
+}
+function removeAandB(prefectA, prefectB) {
+
+}
+
+function removePrefect(studentPrefect) {
+  studentPrefect.prefect = false;
+  
+}
+function appointPrefect(student) {
+  student.prefect = true;
+  
+}
+
+}
 
 
 function showDetails(student) {
