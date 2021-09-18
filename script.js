@@ -377,7 +377,7 @@ function clickStar() {
 
 function tryToMakePrefect(selectedStudent) {
 
-  const prefects = studentList.filter(student => student.prefect)
+  const allPrefects = studentList.filter(student => student.prefect)
   const prefects = allPrefects.filter(
     (prefect) => prefect.house === selectedStudent.house
   );
@@ -399,9 +399,27 @@ function tryToMakePrefect(selectedStudent) {
 }
 
 function removeOther(other) {
-  removePrefect(other)
-  appointPrefect(selectedStudent)
+  document.querySelector("#removeother").classList.remove("hidden");
+  document.querySelector("#removeother .clsbutton").addEventListener("click", closeDialog);
+  document.querySelector("#remove_other").addEventListener("click", clickRemoveOther)
+
+
+   
+  function closeDialog() {
+    document.querySelector("#removeother").classList.add("hidden");
+    document.querySelector("#removeother .clsbutton").removeEventListener("click", closeDialog);
+    document.querySelector("#remove_other").removeEventListener("click", clickRemoveOther)
+
+  }
+  function clickRemoveOther() {
+    removePrefect(other)
+    appointPrefect(selectedStudent)
+    closeDialog()
+  
+  }
 }
+
+
 function removeAandB(prefectA, prefectB) {
 
 }

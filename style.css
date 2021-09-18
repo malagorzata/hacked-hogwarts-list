@@ -101,3 +101,32 @@ h1 {
 #sorting th.sortby[data-sort-direction="desc"]::after {
   content: "↓";
 }
+
+/* Warning box */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog {
+  border: 2px solid black;
+  box-shadow: 1px 1px 10px grey;
+  background-color: #eee;
+  position: relative;
+}
+
+.clsbutton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+}
