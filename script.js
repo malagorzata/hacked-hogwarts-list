@@ -9,6 +9,9 @@
 document.addEventListener("DOMContentLoaded", start);
 
 const studentList = [];
+let expelledStudents = [];
+
+
 const Student = {
     imageUrl: "",
     firstName: "",
@@ -56,7 +59,8 @@ function registerButtons() {
 function start() {
     loadJSON();
     registerButtons();
-}
+    registerExpelledStudents();
+  }
 function loadJSON() {
     fetch("https://petlatkea.dk/2021/hogwarts/students.json")
     .then((response) => response.json())
@@ -64,6 +68,10 @@ function loadJSON() {
         prepareObjects(jsonData)
     });
     // console.log("JSON data loaded");
+}
+
+function registerExpelledStudents() {
+  document.querySelector("[data-filter='expelled']").addEventListener("click", displayExpelledStudent);
 }
 
 function prepareObjects(jsonData) {
@@ -230,6 +238,12 @@ function filterGryffindor(student) {
       
 }
 
+
+function displayExpelledStudent() {
+  console.log("Show expelled students");
+  displayList(expelledStudents);
+}
+
 function selectSort(event) {
 const sortBy = event.target.dataset.sort;
 const sortDir = event.target.dataset.sortDirection;
@@ -319,6 +333,9 @@ function buildList() {
   const currentList = filterList(studentList);
   const sortedList = sortList(currentList);
   displayList(sortedList);
+  // displayExpelledList(expelledStudentList);
+
+
 
 }
 
@@ -328,6 +345,12 @@ function displayList(studentList) {
      console.log("displayList");
 
 
+}
+
+function displayExpelledList(students) {
+  document.querySelector("#list #expelled");
+
+  students.forEach(displayExpelledStudents);
 }
 
 function displayStudent(student) {
@@ -414,6 +437,7 @@ function removeOther(other) {
   function clickRemoveOther() {
     removePrefect(other)
     appointPrefect(selectedStudent)
+    buildList()
     closeDialog()
   
   }
@@ -444,7 +468,32 @@ function showDetails(student) {
       ".full_name"
     ).textContent = ` ${student.firstName} ${student.middleName} ${student.lastName}`;
     popWindow.querySelector(".student_image").src = `images/${student.imageUrl}`;
+    
 
+    if (student.expel === true) {
+      popWindow.querySelector("#expelbutton").style.backgroundColor = "black";
+      popWindow.querySelector("#expelbutton").style.cursor = "";
+    } else {
+      popWindow.querySelector("#expelbutton").style.backgroundColor = "transparent";
+      popWindow.querySelector("#expelbutton").style.cursor = "pointer";
+      // Add Expelled in popup
+      document.querySelector("#expelbutton").addEventListener("click", clickExpel);
+    }
+  
+    function clickExpel() {
+      student.expel = true;
+  
+      popWindow.querySelector("#expelbutton").style.backgroundColor = "black";
+      popWindow.querySelector("#expelbutton").style.cursor = "";
+      document.querySelector("#expelbutton").removeEventListener("click", clickExpel);
+      expelTheStudent(student);
+  
+      buildList();
+    }
 }
 
-
+function expelTheStudent(student) {
+  console.log("Expel the student");
+studentList.splice(studentList.indexOf(student), 1);
+  expelledStudents.push(student);
+}
