@@ -54,13 +54,16 @@ function registerButtons() {
     document.querySelectorAll("[data-action='sort']")
     .forEach(button => button.addEventListener("click", selectSort));
 
+    document.querySelector("#search").addEventListener("input", searchStudent);
+
+
 }
 
 function start() {
     loadJSON();
     registerButtons();
     registerExpelledStudents();
-    registerSearchStudent();
+    // registerSearchStudent();
 
   }
 function loadJSON() {
@@ -75,9 +78,7 @@ function loadJSON() {
 function registerExpelledStudents() {
   document.querySelector("[data-filter='expelled']").addEventListener("click", displayExpelledStudent);
 }
-function registerSearchStudent() {
-  document.querySelector("#search").addEventListener("input", searchStudent);
-}
+
 function prepareObjects(jsonData) {
     jsonData.forEach((elm) => {
 
@@ -373,8 +374,7 @@ function buildList() {
 function displayList(studentList) {
     document.querySelector("#list tbody").innerHTML = "";
     studentList.forEach(displayStudent);
-    displayNumbers(studentList);
-
+    displayStudentNumbers(studentList);
      console.log("displayList");
 
 
@@ -624,7 +624,7 @@ function numberSlytherins(student) {
     return false;
   }
 }
-function displayNumbers(studentList) {
+function displayStudentNumbers(studentList) {
  document.querySelector("#totalnumber_students").textContent = `Displayed students : ${studentList.length}`;
  document.querySelector("#g_students").textContent = `Gryffindor: ${studentList.filter(numberGryffindors).length}`;
   document.querySelector("#h_students").textContent = `Hufflepuff: ${studentList.filter(numberHufflepuffs).length}`;
