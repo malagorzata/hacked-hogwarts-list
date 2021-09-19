@@ -60,6 +60,8 @@ function start() {
     loadJSON();
     registerButtons();
     registerExpelledStudents();
+    registerSearchStudent();
+
   }
 function loadJSON() {
     fetch("https://petlatkea.dk/2021/hogwarts/students.json")
@@ -73,7 +75,9 @@ function loadJSON() {
 function registerExpelledStudents() {
   document.querySelector("[data-filter='expelled']").addEventListener("click", displayExpelledStudent);
 }
-
+function registerSearchStudent() {
+  document.querySelector("#search").addEventListener("input", searchStudent);
+}
 function prepareObjects(jsonData) {
     jsonData.forEach((elm) => {
 
@@ -98,6 +102,29 @@ buildList();
             // displayList(studentList);
 }
 
+function searchStudent() {
+  let search = document.querySelector("#search").value.toLowerCase();
+  let searchResult = studentList.filter(filterSearch);
+
+  function filterSearch(student) {
+    //Searching firstName and lastLame
+    if (
+      student.firstName.toString().toLowerCase().includes(search) ||
+      student.lastName.toString().toLowerCase().includes(search)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+    
+  }
+
+  if (search == " ") {
+    displayList(studentList);
+  }
+
+  displayList(searchResult);
+}
 
 // console.log(studentList);
 
@@ -166,13 +193,17 @@ return firstName;
     }
   }
   
+  
 function displayList() {
     document.querySelector("#list tbody").innerHTML = "";
     studentList.forEach(displayStudent);
+
     //  console.log("displayList");
 
 
 }
+
+
 
 // function displayStudent(student) {
 //     const clone = document.querySelector("template#studentList").content.cloneNode(true);
@@ -341,7 +372,9 @@ function buildList() {
 
 function displayList(studentList) {
     document.querySelector("#list tbody").innerHTML = "";
-  studentList.forEach(displayStudent);
+    studentList.forEach(displayStudent);
+    displayNumbers(studentList);
+
      console.log("displayList");
 
 
@@ -365,6 +398,27 @@ function displayStudent(student) {
     // clone.querySelector("[data-field=nickName]").textContent = student.nickName;
     clone.querySelector("[data-field=house]").textContent = student.house;
 
+    //squad
+if (student.squad === true) {
+  clone.querySelector("[data-field=squad]").textContent = "YES";
+} else {
+  clone.querySelector("[data-field=squad]").textContent = "NO";
+}
+
+clone
+.querySelector("[data-field=squad]")
+.addEventListener("click", clickSquad);
+function clickSquad() {
+if (student.squad === true) {
+  student.squad = false;
+} else {
+  tryToBeINSquad(student);
+}
+buildList();
+}
+
+
+    // prefect
 if(student.prefect === true) {
     clone.querySelector("[data-field=prefect]").textContent = "⭐"
 
@@ -387,7 +441,7 @@ function clickStar() {
 }
 
     clone
-    .querySelector(".popUp")
+    .querySelector("#allStudentsInfo")
     .addEventListener("click", () => showDetails(student));  
 
     closeWindow.addEventListener("click", () => (popWindow.style.display = "none"));
@@ -413,7 +467,7 @@ function tryToMakePrefect(selectedStudent) {
     )
     .shift();
 
- // if there is another of the same type, house && gender
+ // house and gender included
  if (other !== undefined) {
   console.log("there can only be one prefect of each type");
   removeOther(other);
@@ -457,6 +511,7 @@ function appointPrefect(student) {
   
 }
 
+
 }
 
 
@@ -468,7 +523,10 @@ function showDetails(student) {
       ".full_name"
     ).textContent = ` ${student.firstName} ${student.middleName} ${student.lastName}`;
     popWindow.querySelector(".student_image").src = `images/${student.imageUrl}`;
-    
+    popWindow.querySelector(
+      ".house"
+    ).textContent = student.house;
+  
 
     if (student.expel === true) {
       popWindow.querySelector("#expelbutton").style.backgroundColor = "black";
@@ -490,6 +548,45 @@ function showDetails(student) {
   
       buildList();
     }
+
+
+    if (student.squad === true) {
+      popWindow.querySelector(
+        ".squad"
+      ).textContent = `inquisitorial squad : Is member`;
+    } else {
+      popWindow.querySelector(
+        ".squad"
+      ).textContent = `inquisitorial squad : Not member`;
+    }
+
+    document.querySelector(".addsquad").addEventListener("click", clickAddSquad);
+    function clickAddSquad() {
+      document
+        .querySelector(".addsquad")
+        .removeEventListener("click", clickAddSquad);
+      if (student.squad === true) {
+        student.squad = false;
+      } else {
+        tryToBeINSquad(student);
+      }
+      buildList();
+    }
+
+    function tryToBeINSquad(selectedStudent) {
+      if (selectedStudent.house === "Slytherin") {
+        addToSquad(selectedStudent);
+      } else {
+        selectedStudent.squad = false;
+      }
+    }
+
+    function addToSquad(selectedStudent) {
+      selectedStudent.squad = true;
+      document.querySelector(
+        ".squad"
+      ).textContent = `inquisitorial squad : Is member`;
+    }
 }
 
 function expelTheStudent(student) {
@@ -497,3 +594,49 @@ function expelTheStudent(student) {
 studentList.splice(studentList.indexOf(student), 1);
   expelledStudents.push(student);
 }
+
+
+function numberGryffindors(student) {
+  if (student.house === "Gryffindor") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function numberHufflepuffs(student) {
+  if (student.house === "Hufflepuff") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function numberRavenclaws(student) {
+  if (student.house === "Ravenclaw") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function numberSlytherins(student) {
+  if (student.house === "Slytherin") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function displayNumbers(studentList) {
+ document.querySelector("#totalnumber_students").textContent = `Displayed students : ${studentList.length}`;
+ document.querySelector("#g_students").textContent = `Gryffindor: ${studentList.filter(numberGryffindors).length}`;
+  document.querySelector("#h_students").textContent = `Hufflepuff: ${studentList.filter(numberHufflepuffs).length}`;
+  document.querySelector("#r_students").textContent = `Ravenclaw: ${studentList.filter(numberRavenclaws).length}`;
+  document.querySelector("#s_students").textContent = `Slytherin: ${studentList.filter(numberSlytherins).length}`;
+  // displayed students
+
+
+  // // expelled students
+  // document.querySelector(
+  //   "#expelled_students"
+  // ).textContent = `Expelled students : ${expelledStudents.length}`;
+}
+
+

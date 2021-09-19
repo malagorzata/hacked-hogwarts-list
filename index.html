@@ -15,6 +15,16 @@
 
 
 <main>
+
+  <div>
+    <input
+      type="search"
+      placeholder="Search student"
+      id="search"
+      name="search"
+    />
+  </div>
+  
 <section class="filterHouse">
     <button class="filter" data-action="filter" data-filter="all">
       All
@@ -35,7 +45,7 @@
       Expelled
     </button>
   </section>
-
+<div id ="things">
   <table id="list">
     <thead>
         <tr id="sorting">
@@ -53,7 +63,9 @@
             <th  data-action="sort"
             data-sort-direction="asc"
             data-sort="prefect">Prefect</th>            
-            <th>Squad</th>
+            <th data-action="sort"
+            data-sort-direction="asc"
+            data-sort="squad">Squad</th>
             <th>Student Status</th>
 
             <!-- <th>NickName</th> -->
@@ -64,6 +76,23 @@
 </table>
 
 
+<div id="students_qt">
+  <div class="topcolumn">
+    <h2>Status of the students</h2>
+
+    <p id="totalnumber_students">Total number:</p>
+    <p id="expelled_students">Expelled students:</p>
+  </div>
+  <div class="bottomcolumn">
+    <h2>Status of the houses</h2>
+    <p id="g_students">Gryffindor:</p>
+    <p id="h_students">Hufflepuff:</p>
+    <p id="r_students">Ravenclaw:</p>
+    <p id="s_students">Slytherin:</p>
+  </div>
+</div>
+
+</div>
   <template id="studentList">
     <tr id="allStudentsInfo">
       <td class="student_profile_image" data-field="image">
@@ -74,7 +103,7 @@
       <td class="student_info popUp" data-field="lastName">LASTNAME</td>
       <td class="student_info popUp" data-field="house">HOUSE</td>
       <td class="student_info popUp" data-field="prefect">✰</td>
-      <td class="student_info popUp" data-field="squad">Squad</td>
+      <td class="student_info popUp" data-field="squad">NO</td>
       <td class="student_info popUp" data-field="expel">Student status</td>
     
     </tr>
@@ -96,21 +125,32 @@
 
   <div id="popUp" class="hidden" >
     <div id="studentInfo" >
-      <div>
-        <img src="" alt="" class="student_image" />
+      <div class="columns_popup">
+      <div class="col_one">
+        <div>
+          <img src="" alt="" class="student_image" />
+        </div>
+        <p class="full_name">Harry James Potter</p>
+        <p class="nick_name">N/A</p>
       </div>
-      <p class="full_name">Harry James Potter</p>
-      <p class="nick_name">N/A</p>
-      <p class="house">Gryffindor</p>
-      <p class="gender">Male</p>
-      <p class="blood_type">Half-blood</p>
-      <p class="prefect" data-field="single_prefect">No</p>
-      <p class="squad" data-field="single_squad">No</p>
-      <p class="expel_status"></p>
-      <p></p>
-      <button id="expelbutton">EXPEL STUDENT</button>
+   <div class="col_two">
+    <p class="house">Gryffindor</p>
+    <p class="gender">Male</p>
+    <p class="blood_type">Half-blood</p>
+    <p class="prefect" data-field="single_prefect">No</p>
+    <p class="squad" data-field="single_squad">No</p>
+    <p class="expel_status"></p>
+   </div>
+   
 
     </div>
+    <button id="expelbutton">EXPEL STUDENT</button>
+    <button class="addsquad">
+    ADD SQUAD<span data-field="addsquad"></span>
+    </button>
+
+    </div>
+
     <button class="closeButton" id="close">X</button>
 
   </div>

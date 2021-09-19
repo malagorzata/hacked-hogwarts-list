@@ -35,7 +35,7 @@ h1 {
 
 #list th,
 #list td {
-  padding: 0 1.5rem;
+  padding: 0 1rem;
 }
 
 #allStudentsInfo {
@@ -60,23 +60,39 @@ h1 {
   display: block;
 }
 
+/* Pop up window */
+
 #popUp {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* background-color: rgba(0, 0, 0, 0.9); */
+  background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
 } /* <-- end */
 
 #studentInfo {
-  background-color: lightgreen;
+  background-color: var(--main-background);
+  border: 2px solid;
+  border-color: var(--border-color);
   padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  height: 20rem;
+}
+.columns_popup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
+.columns_popup div {
+  padding: 0 2rem;
+}
 .closebutton {
   background-color: #981c1c; /*placeholder*/
   border: 0;
@@ -129,4 +145,18 @@ h1 {
   top: 0;
   width: 2rem;
   height: 2rem;
+}
+
+#things {
+  display: flex;
+  flex-direction: row;
+}
+
+#students_qt {
+  margin-left: 2rem;
+}
+
+.topcolumn h2 {
+  margin: 0;
+  padding: 0;
 }
