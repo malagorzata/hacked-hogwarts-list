@@ -8,7 +8,8 @@
 
 document.addEventListener("DOMContentLoaded", start);
 
-const studentList = [];
+let studentList = [];
+let bloodStatusList = [];
 let expelledStudents = [];
 
 
@@ -66,42 +67,97 @@ function start() {
     // registerSearchStudent();
 
   }
-function loadJSON() {
-    fetch("https://petlatkea.dk/2021/hogwarts/students.json")
-    .then((response) => response.json())
-    .then((jsonData) => {
-        prepareObjects(jsonData)
+
+  async function loadJSON() {
+    console.log("loadJS");
+    const response = await fetch("https://petlatkea.dk/2021/hogwarts/students.json");
+    const jsonData = await response.json();
+    const responseBlood = await fetch("https://petlatkea.dk/2021/hogwarts/families.json");
+    const jsonDataBlood = await responseBlood.json();
+  
+    // when loaded, prepare data objects
+    prepareObjects(jsonData, jsonDataBlood);
+  }
+  
+  function prepareObjects(jsonData, jsonDataBlood) {
+    studentList = jsonData.map(prepareObject);
+  
+    //blood status
+    bloodStatusList = jsonDataBlood;
+    setBloodStatus(jsonDataBlood);
+  
+    // fixed TODO: Add filtering here !!! This might not be the function we want to call first
+    buildList();
+  }
+  
+  function prepareObject(jsonObject) {
+    const student = Object.create(Student); // new object with cleaned data
+  
+    student.firstName = getFirstName(jsonObject.fullname)
+    student.lastName = getLastName(jsonObject.fullname)
+    student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase()
+
+    // student.middleName = getStudentsMiddleName(jsonObject.fullname.trim());
+    // student.nickname = getStudentsNickname(jsonObject.fullname.trim());
+    student.house = student.house.trim();
+    student.imageUrl = getImageUrl(student.lastName, student.firstName);
+    console.log(student);
+    return student;
+  }
+
+  function setBloodStatus(jsonDataBlood) {
+    console.log("defining bloodstatus for students");
+    const student = Object.create(Student);
+    studentList.forEach((student) => {
+      if (jsonDataBlood.half.includes(student.lastName)) {
+        student.bloodstatus = "half-blood";
+      } else if (jsonDataBlood.pure.includes(student.lastName)) {
+        student.bloodstatus = "pure-blood";
+      } else {
+        student.bloodstatus = "muggleborn";
+      }
     });
-    // console.log("JSON data loaded");
-}
+    return student;
+  }
+  
+// function loadJSON() {
+//     fetch("https://petlatkea.dk/2021/hogwarts/students.json")
+//     .then((response) => response.json())
+//     .then((jsonData) => {
+//         prepareObjects(jsonData)
+//     });
+//     // console.log("JSON data loaded");
+// }
 
 function registerExpelledStudents() {
   document.querySelector("[data-filter='expelled']").addEventListener("click", displayExpelledStudent);
 }
 
-function prepareObjects(jsonData) {
-    jsonData.forEach((elm) => {
 
-              const student = Object.create(Student);
-              student.firstName = getFirstName(elm.fullname);
-              student.firstName = student.firstName.substring(0, 1).toUpperCase() + student.firstName.substring(1).toLowerCase();
-              student.middleName = getMiddleName(elm.fullname);
-            //   student.middleName = middleName
 
-            //   student.nickname = getNickName(elm.fullname);
-              student.lastName = getLastName(elm.fullname);
-              student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase();
-              student.house = elm.house;
-              student.house = student.house.trim();
-              student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
-              student.imageUrl = getImageUrl(student.lastName, student.firstName);
+// function prepareObjects(jsonData) {
+//     jsonData.forEach((elm) => {
 
-              studentList.push(student);
-            });
+//               const student = Object.create(Student);
+//               student.firstName = getFirstName(elm.fullname);
+//               student.firstName = student.firstName.substring(0, 1).toUpperCase() + student.firstName.substring(1).toLowerCase();
+//               student.middleName = getMiddleName(elm.fullname);
+//             //   student.middleName = middleName
+
+//             //   student.nickname = getNickName(elm.fullname);
+//               student.lastName = getLastName(elm.fullname);
+//               student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase();
+//               student.house = elm.house;
+//               student.house = student.house.trim();
+//               student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
+//               student.imageUrl = getImageUrl(student.lastName, student.firstName);
+
+//               studentList.push(student);
+//             });
     
-buildList();
-            // displayList(studentList);
-}
+// buildList();
+//             // displayList(studentList);
+// }
 
 function searchStudent() {
   let search = document.querySelector("#search").value.toLowerCase();
@@ -156,7 +212,7 @@ return firstName;
         // if (middleName.includes("")) {
         // middleName = student.middleName.substring(0, 1).toUpperCase() + student.middleName.substring(1).toLowerCase();
          else {
-        middleName = undefined;
+        middleName = " ";
         }
     
     return middleName;
@@ -397,6 +453,7 @@ function displayStudent(student) {
     clone.querySelector("[data-field=lastName]").textContent = student.lastName;
     // clone.querySelector("[data-field=nickName]").textContent = student.nickName;
     clone.querySelector("[data-field=house]").textContent = student.house;
+    clone.querySelector("[data-field=bloodstatus]").textContent = student.bloodstatus;
 
     //squad
 if (student.squad === true) {
@@ -525,7 +582,7 @@ function showDetails(student) {
     popWindow.querySelector(".student_image").src = `images/${student.imageUrl}`;
     popWindow.querySelector(
       ".house"
-    ).textContent = student.house;
+    ).textContent = `House: ${student.house}`;
   
 
     if (student.expel === true) {
@@ -553,11 +610,21 @@ function showDetails(student) {
     if (student.squad === true) {
       popWindow.querySelector(
         ".squad"
-      ).textContent = `inquisitorial squad : Is member`;
+      ).textContent = `Inquisitorial squad : Is member`;
     } else {
       popWindow.querySelector(
         ".squad"
-      ).textContent = `inquisitorial squad : Not member`;
+      ).textContent = `Inquisitorial squad : Not member`;
+    }
+
+    if (student.prefect === true) {
+      popWindow.querySelector(
+        ".prefect"
+      ).textContent = `Prefect : YES`;
+    } else {
+      popWindow.querySelector(
+        ".prefect"
+      ).textContent = `Prefect : NO`;
     }
 
     document.querySelector(".addsquad").addEventListener("click", clickAddSquad);
@@ -587,11 +654,27 @@ function showDetails(student) {
         ".squad"
       ).textContent = `inquisitorial squad : Is member`;
     }
+
+    if (student.house === "Gryffindor") {
+      document.querySelector("#studentInfo").style.backgroundColor = "#740001";
+      document.querySelector("#studentInfo").style.borderColor = "#D3A625";
+
+      // document.querySelector("#column_top img").src = `my_images/gryffindor.png`;
+    } else if (student.house === "Slytherin") {
+      document.querySelector("#studentInfo").style.backgroundColor = "#1A472A";
+      document.querySelector("#studentInfo").style.borderColor = "#5D5D5D";;
+    } else if (student.house === "Hufflepuff") {
+      document.querySelector("#studentInfo").style.backgroundColor = "#FFDB00";
+      document.querySelector("#studentInfo").style.borderColor = "#60605C";
+    } else {
+      document.querySelector("#studentInfo").style.backgroundColor = "#222F5B";
+      document.querySelector("#studentInfo").style.borderColor = "#946B2D";
+    }
 }
 
 function expelTheStudent(student) {
   console.log("Expel the student");
-studentList.splice(studentList.indexOf(student), 1);
+   studentList.splice(studentList.indexOf(student), 1);
   expelledStudents.push(student);
 }
 
