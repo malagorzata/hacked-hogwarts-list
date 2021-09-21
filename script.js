@@ -372,8 +372,14 @@ function displayStudent(student) {
     }
     buildList();
   }
+  // expel
+  if (student.expel === true) {
+    clone.querySelector("[data-field=expel]").textContent = "EXPELLED";
+  } else {
+    clone.querySelector("[data-field=expel]").textContent = "ACTIVE";
+  }
 
-  clone.querySelector("#allStudentsInfo").addEventListener("click", () => showDetails(student));
+  clone.querySelector(".student_profile_image").addEventListener("click", () => showDetails(student));
 
   closeWindow.addEventListener("click", () => (popWindow.style.display = "none"));
   document.querySelector("#list tbody").appendChild(clone);
@@ -488,6 +494,25 @@ function showDetails(student) {
   function addToSquad(selectedStudent) {
     selectedStudent.squad = true;
     document.querySelector(".squad").textContent = `Inquisitorial squad : Is member`;
+  }
+
+  if (student.house === "Slytherin") {
+    document.querySelector("#studentInfo").style.color = "#B7B3B2";
+    document.querySelector("#studentInfo").style.backgroundColor = "#095A2A";
+    document.querySelector("#studentInfo").style.border = "7px solid #B7B3B2";
+    // document.querySelector("#student_image").style.border = "1.5px solid #d6d5d5 ";
+  } else if (student.house === "Hufflepuff") {
+    document.querySelector("#studentInfo").style.color = "#7B716F";
+    document.querySelector("#studentInfo").style.backgroundColor = "#FFD200";
+    document.querySelector("#studentInfo").style.border = "7px solid #7B716F";
+  } else if (student.house === "Gryffindor") {
+    document.querySelector("#studentInfo").style.color = "#FBBA00";
+    document.querySelector("#studentInfo").style.backgroundColor = "#81323B";
+    document.querySelector("#studentInfo").style.border = "7px solid #FBBA00";
+  } else if (student.house === "Ravenclaw") {
+    document.querySelector("#studentInfo").style.color = "#325088";
+    document.querySelector("#studentInfo").style.backgroundColor = "#A5D3F2";
+    document.querySelector("#studentInfo").style.border = "7px solid #325088";
   }
 }
 
