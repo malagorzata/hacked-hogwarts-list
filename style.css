@@ -1,12 +1,14 @@
 @import url("http://fonts.cdnfonts.com/css/harry-potter");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300&display=swap");
 
 :root {
-  --background-color: #52245f;
+  --background-color: #090142;
   --border-color: #e0be3f;
   --main-background: #f9f7f5;
   --text-color: #2f2b5f;
 
   --display-font: "Harry Potter", sans-serif;
+  --main-font: "Work Sans", sans-serif;
 }
 body {
   background-color: var(--background-color);
@@ -36,6 +38,21 @@ h1 {
 #list th,
 #list td {
   padding: 0 1rem;
+}
+
+#list th {
+  font-family: var(--main-font);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--border-color);
+  text-transform: uppercase;
+  background-color: var(--background-color);
+}
+
+#list td {
+  font-family: var(--main-font);
+  font-weight: 300;
+  font-size: 1rem;
 }
 
 #allStudentsInfo {
@@ -75,9 +92,9 @@ h1 {
 } /* <-- end */
 
 #studentInfo {
-  /* background-color: var(--main-background); */
-  border: 5px solid;
-  /* border-color: var(--border-color); */
+  background-color: var(--main-background);
+  border: 2px solid;
+  border-color: var(--border-color);
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -91,7 +108,7 @@ h1 {
 }
 
 .columns_popup div {
-  /* padding: 0 2rem; */
+  padding: 0 2rem;
 }
 .closebutton {
   background-color: #981c1c; /*placeholder*/
@@ -102,17 +119,6 @@ h1 {
   top: 0.3em;
   width: 4em;
   height: 4em;
-}
-
-.col_one {
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-}
-
-.img {
-  padding: 0;
-  margin: 0;
 }
 
 /* Sorting */
@@ -170,4 +176,14 @@ h1 {
 .topcolumn h2 {
   margin: 0;
   padding: 0;
+}
+
+.col_two p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+}
+
+.col_two p span {
+  font-family: var(--main-font);
+  font-weight: 300;
 }

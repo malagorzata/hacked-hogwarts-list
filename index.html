@@ -68,6 +68,8 @@
             data-sort="squad">Squad</th>
             <th>Student Status</th>
 
+            <th>Blood Status</th>
+
             <!-- <th>NickName</th> -->
         </tr>
     </thead>
@@ -106,7 +108,7 @@
       <td class="student_info popUp" data-field="squad">NO</td>
       <td class="student_info popUp" data-field="expel">Student status</td>
       <td class="student_info popUp" data-field="bloodstatus">Blood status</td>
-      
+
     
     </tr>
   </template>
@@ -129,18 +131,17 @@
     <div id="studentInfo" >
       <div class="columns_popup">
       <div class="col_one">
-        <div class="img">
+        <div>
           <img src="" alt="" class="student_image" />
         </div>
         <p class="full_name">Harry James Potter</p>
         <p class="nick_name">N/A</p>
       </div>
    <div class="col_two">
-    <p class="house">Gryffindor</p>
-    <p class="gender">Male</p>
-    <p class="blood_type">Half-blood</p>
-    <p class="prefect" data-field="single_prefect">No</p>
-    <p class="squad" data-field="single_squad">No</p>
+    <p class="house">House: <span>Gryffindor</span></p>
+    <p class="blood_type">Blood status: <span>Half-blood</span></p>
+    <p class="prefect" data-field="single_prefect">Prefect: <span>No</span></p>
+    <p class="squad" data-field="single_squad">Inquisitorial squad: <span>No</span</p>
     <p class="expel_status"></p>
    </div>
    
