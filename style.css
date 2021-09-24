@@ -218,6 +218,17 @@ h1 {
 }
 
 /* Filters  */
+
+button.filter,
+#search {
+  border: 1.5px solid black;
+  background-color: var(--color-1);
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
 .gryf:hover,
 .gryf:focus {
   border: 1px solid #fbba00;
@@ -236,9 +247,9 @@ h1 {
 
 .huf:hover,
 .huf:focus {
-  border: 1px solid #b7b3b2;
-  color: #b7b3b2;
-  background-color: #095a2a;
+  border: 1px solid #7b716f;
+  color: #7b716f;
+  background-color: #ffd200;
   transform: scale(1.1);
 }
 
@@ -271,4 +282,15 @@ h1 {
 #students_qt h2 {
   text-align: left;
   font-family: var(--main-font);
+}
+
+/* Hacking */
+
+#hack {
+  background-color: red;
+  color: white;
+  width: 5rem;
+  height: 2rem;
+  cursor: pointer;
+  margin: 0.5rem 0;
 }

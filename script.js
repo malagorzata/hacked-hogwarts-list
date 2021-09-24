@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", start);
 
 let studentList = [];
 let expelledStudents = [];
+let hackingSystem = false;
 
 const Student = {
   imageUrl: "",
@@ -63,6 +64,8 @@ async function loadJSONBloodStatus(studentJson) {
   const jsonData = await respons.json();
   prepareObjects(studentJson);
   prepareBloodStatus(jsonData);
+
+  document.querySelector("#hack").addEventListener("click", hackTheSystem);
   console.log("Blood status data loaded");
 }
 
@@ -562,4 +565,50 @@ function displayNumbers(studentList) {
   // document.querySelector(
   //   "#expelled_students"
   // ).textContent = `Expelled students : ${expelledStudents.length}`;
+}
+
+function hackTheSystem() {
+  console.log("system hacked");
+  if (hackingSystem === false) {
+    //add me to studentlist
+    const hacked = Object.create(Student);
+    hacked.firstName = "Gosia";
+    hacked.lastName = "Warwaszynska";
+    hacked.house = "Gryffindor";
+    hacked.prefect = true;
+    hacked.expelled = false;
+    hacked.bloodstatus = "Half-blood";
+    hacked.squad = false;
+    messUpTheBloodStatus();
+    studentList.unshift(hacked);
+    console.log(Student);
+
+    hackingSystem = true;
+
+    buildList();
+    setTimeout(function () {
+      alert("THE SYSTEM HAS BEEN HACKED. BEWARE!");
+    }, 100);
+  } else {
+    alert("THE SYSTEM HAS BEEN HACKED!!!");
+  }
+}
+
+function messUpTheBloodStatus() {
+  studentList.forEach((student) => {
+    if (student.bloodstatus === "Muggle-born") {
+      student.bloodstatus = "Pure-blood";
+    } else if (student.bloodstatus === "Half-blood") {
+      student.bloodstatus = "Pure-blood";
+    } else {
+      let bloodNumber = Math.floor(Math.random() * 3);
+      if (bloodNumber === 0) {
+        student.bloodstatus = "Muggle-born";
+      } else if (bloodNumber === 1) {
+        student.bloodstatus = "Half-blood";
+      } else {
+        student.bloodstatus = "Pure-blood";
+      }
+    }
+  });
 }
