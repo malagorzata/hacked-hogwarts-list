@@ -216,3 +216,59 @@ h1 {
   margin: 0;
   padding: 0;
 }
+
+/* Filters  */
+.gryf:hover,
+.gryf:focus {
+  border: 1px solid #fbba00;
+  color: #fbba00;
+  background-color: #81323b;
+  transform: scale(1.1);
+}
+
+.sly:hover,
+.sly:focus {
+  border: 1px solid #b7b3b2;
+  color: #b7b3b2;
+  background-color: #095a2a;
+  transform: scale(1.1);
+}
+
+.huf:hover,
+.huf:focus {
+  border: 1px solid #b7b3b2;
+  color: #b7b3b2;
+  background-color: #095a2a;
+  transform: scale(1.1);
+}
+
+.rav:hover,
+.rav:focus {
+  border: 1px solid #325088;
+  color: #325088;
+  background-color: #a5d3f2;
+  transform: scale(1.1);
+}
+
+.exp:hover,
+.exp:focus {
+  transform: scale(1.1);
+  color: white;
+  background-color: black;
+}
+
+.all:hover,
+.all:focus {
+  border: var(--border-color);
+  background-color: var(--background-color);
+  color: var(--border-color);
+}
+
+#students_qt p {
+  font-family: var(--main-font);
+}
+
+#students_qt h2 {
+  text-align: left;
+  font-family: var(--main-font);
+}
