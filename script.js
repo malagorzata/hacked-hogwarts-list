@@ -289,7 +289,7 @@ function buildList() {
   const currentList = filterList(studentList);
   const sortedList = sortList(currentList);
   displayList(sortedList);
-  // displayExpelledList(expelledStudentList);
+  displayExpelledList(expelledStudentList);
 }
 
 function displayList(studentList) {
@@ -528,7 +528,6 @@ function showDetails(student) {
 }
 
 function expelTheStudent(student) {
-  // console.log("Expel the student");
   if (student.hacker === true) {
     alert("this is hacker, can't expel me!");
   } else {
@@ -577,7 +576,7 @@ function displayNumbers(studentList) {
 function hackTheSystem() {
   console.log("system hacked");
   if (hackingSystem === false) {
-    //add me to studentlist
+    //add me to studentList
     const hacked = Object.create(Student);
 
     hacked.firstName = "Gosia";
