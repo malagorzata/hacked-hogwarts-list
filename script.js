@@ -382,6 +382,7 @@ function displayStudent(student) {
   document.querySelector("#list tbody").appendChild(clone);
 }
 
+// prefect not fully working - it allows to choose only one prefect per house
 function tryToMakePrefect(selectedStudent) {
   const allPrefects = studentList.filter((student) => student.prefect);
   const prefects = allPrefects.filter((prefect) => prefect.house === selectedStudent.house);
